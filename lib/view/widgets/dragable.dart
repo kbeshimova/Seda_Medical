@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:seda/view/global/global.dart';
+import 'package:seda/global/global.dart';
 
 class DraggableSearchableListView extends StatefulWidget {
-  const DraggableSearchableListView({
-    Key? key,
-  }) : super(key: key);
+  const DraggableSearchableListView(
+      {Key? key,
+      required this.w,
+      required this.name,
+      required this.description,
+      required this.author,
+      required this.date})
+      : super(key: key);
+
+  final double w;
+  final String name;
+  final String description;
+  final String author;
+  final String date;
 
   @override
   _DraggableSearchableListViewState createState() =>
@@ -17,6 +28,7 @@ class _DraggableSearchableListViewState
   final ValueNotifier<bool> searchTextCloseButtonVisibility =
       ValueNotifier<bool>(false);
   final ValueNotifier<bool> searchFieldVisibility = ValueNotifier<bool>(false);
+
   @override
   void dispose() {
     searchTextController.dispose();
@@ -36,7 +48,7 @@ class _DraggableSearchableListViewState
             maxChildSize: 1.0,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16.0),
@@ -45,7 +57,7 @@ class _DraggableSearchableListViewState
                 ),
                 child: ListView(
                   controller: scrollController,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
@@ -58,38 +70,40 @@ class _DraggableSearchableListViewState
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Climate change: Arctic warming linked to colder winters",
+                              widget.name,
                               style: Theme.of(context).textTheme.headline6,
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(15),
-                            margin: EdgeInsets.symmetric(vertical: 18),
+                            padding: const EdgeInsets.all(15),
+                            margin: const EdgeInsets.symmetric(vertical: 18),
                             decoration: BoxDecoration(
                                 border: Border.all(color: border),
                                 borderRadius: BorderRadius.circular(15)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                CircleAvatar(
+                                const CircleAvatar(
                                   backgroundImage:
                                       AssetImage('assets/banners/docban.jpg'),
                                 ),
-                                Text(
-                                  'Keanu Carpent',
-                                  style: smallTextBl,
+                                Container(
+                                  padding:
+                                      EdgeInsets.only(left: widget.w * 0.02),
+                                  width: widget.w * 0.45,
+                                  child: Text(
+                                    widget.author,
+                                    style: smallTextBl.copyWith(color: black),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                                Text('May 17', style: smallTextBl),
-                                Text('8 min read', style: smallTextBl),
+                                Text(widget.date, style: smallTextBl),
+                                // Text('8 min read', style: smallTextBl),
                               ],
                             ),
                           ),
-                          Text(
-                              'Just say anything, George, say what ever\'s natural, the first thing that comes to your mind. Take that you mutated son-of-a-bitch. My pine, why you. You space bastard, you killed a pine. You do? Yeah, it\'s 8:00. Hey, McFly, I thought I told you never',
-                              style: bodyTx),
-                          SizedBox(
-                            height: 8.0,
-                          ),
+                          Text(widget.description, style: bodyTx),
                         ],
                       ),
                     )

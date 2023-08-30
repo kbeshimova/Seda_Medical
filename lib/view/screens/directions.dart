@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:seda/request/getdata.dart';
 import 'package:seda/view/screens/catalog.dart';
-import 'package:seda/view/global/global.dart';
+import 'package:seda/global/global.dart';
 import 'package:seda/view/widgets/clipper.dart';
 
 class Directions extends StatefulWidget {
@@ -23,16 +24,16 @@ class _DirectionsState extends State<Directions> {
             child: CustomPaint(
               painter: ClipShadowShadowPainter(
                 clipper: clipper,
-                shadow: BoxShadow(
+                shadow: const BoxShadow(
                     color: Colors.transparent,
-                    offset: const Offset(0, -10),
+                    offset: Offset(0, -10),
                     blurRadius: 30,
                     spreadRadius: 10),
               ),
               child: ClipPath(
                 clipper: clipper,
                 child: Container(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 10),
                   color: secondary,
                   height: h * 0.13,
                   width: w,
@@ -41,7 +42,7 @@ class _DirectionsState extends State<Directions> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(),
+                      const SizedBox(),
                       Image.asset(
                         'assets/sedalogo.png',
                         height: 38,
@@ -70,54 +71,66 @@ class _DirectionsState extends State<Directions> {
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
               child: Text(
-                'Последние новости',
+                'Каталог',
                 style: bodyBl,
               ),
             ),
             Expanded(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                children: [
-                  for (var i = 0; i < 10; i++)
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Catalog()));
-                      },
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                        margin: EdgeInsets.only(bottom: 20),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: border, width: 2),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Image.asset(
-                              'assets/directions/luchevaya.png',
-                              height: 49,
-                            ),
-                            SizedBox(
-                              width: w * 0.5,
-                              child: Text(
-                                'Ультразвуковая диагностика',
-                                overflow: TextOverflow.clip,
-                                maxLines: 2,
-                                style: heading,
+              child: FutureBuilder(
+                  future: categoryList(),
+                  builder: (context, category) {
+                    if (category.hasData) {
+                      return ListView(
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          for (var i = 0; i < category.data!.length; i++)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Catalog(
+                                        categoryId: category.data![i].id)));
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 5),
+                                margin: const EdgeInsets.only(bottom: 20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: border, width: 2),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Image.network(
+                                      picUrl(category.data![i].icon),
+                                      height: 49,
+                                    ),
+                                    SizedBox(
+                                      width: w * 0.5,
+                                      child: Text(
+                                        category.data![i].name,
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 2,
+                                        style: heading,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: primary,
+                                      size: 30,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: primary,
-                              size: 30,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+                        ],
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(color: primary),
+                      );
+                    }
+                  }),
             )
           ],
         ),

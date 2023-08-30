@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:seda/view/screens/application.dart';
 import 'package:seda/view/screens/directions.dart';
-import 'package:seda/view/global/global.dart';
+import 'package:seda/global/global.dart';
 import 'package:seda/view/screens/home.dart';
 
 class MainPage extends StatefulWidget {
@@ -11,7 +12,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List pages = [Home(), Directions()];
+  List pages = [
+    Home(),
+    Directions(),
+  ];
   int currentIndex = 0;
   void onTap(int index) {
     setState(() {
@@ -22,6 +26,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: pages[currentIndex],
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.circular(40),
@@ -64,8 +69,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   List<TabData> tabData = [
-    TabData(img: 'assets/catalog.png', label: 'Home'),
-    TabData(img: 'assets/home.png', label: 'Catalog'),
+    TabData(img: 'assets/home.png', label: 'Home'),
+    TabData(img: 'assets/catalog.png', label: 'Catalog'),
+    // TabData(img: 'assets/apply.png', label: 'Request'),
   ];
 }
 
