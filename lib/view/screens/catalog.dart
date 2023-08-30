@@ -1,11 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:seda/view/global/global.dart';
+import 'package:seda/global/global.dart';
+import 'package:seda/request/getdata.dart';
 import 'package:seda/view/screens/description.dart';
 import 'package:seda/view/widgets/clipper.dart';
 
+import '../../classes/product.dart';
+
 class Catalog extends StatefulWidget {
-  const Catalog({super.key});
+  const Catalog({super.key, required this.categoryId});
+
+  final int categoryId;
 
   @override
   State<Catalog> createState() => _CatalogState();
@@ -31,16 +36,16 @@ class _CatalogState extends State<Catalog> {
                   CustomPaint(
                     painter: ClipShadowShadowPainter(
                       clipper: clipper,
-                      shadow: BoxShadow(
+                      shadow: const BoxShadow(
                           color: Colors.transparent,
-                          offset: const Offset(0, -10),
+                          offset: Offset(0, -10),
                           blurRadius: 30,
                           spreadRadius: 10),
                     ),
                     child: ClipPath(
                       clipper: clipper,
                       child: Container(
-                        padding: EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(top: 10),
                         color: secondary,
                         height: h * 0.13,
                         width: w,
@@ -49,7 +54,7 @@ class _CatalogState extends State<Catalog> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(),
+                            const SizedBox(),
                             Image.asset(
                               'assets/sedalogo.png',
                               height: 38,
@@ -91,92 +96,98 @@ class _CatalogState extends State<Catalog> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 17),
-              padding: EdgeInsets.only(
-                left: 20,
-              ),
-              height: h * 0.036,
-              child: TabBar(
-                isScrollable: true,
-                physics: BouncingScrollPhysics(),
-                indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50), color: primary),
-                indicatorColor: white,
-                unselectedLabelColor: primary,
-                dragStartBehavior: DragStartBehavior.start,
-                tabs: [
-                  for (var i = 0; i < 10; i++)
-                    Tab(
-                      child: Text(
-                        'Phylips',
-                      ),
-                    ),
-                ],
-              ),
-            ),
             Expanded(
-              // height: h * 0.7,
-              // width: w,
-              child: TabBarView(
-                children: [
-                  GridView(
-                    physics: BouncingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.80,
-                    ),
-                    children: [
-                      for (var i = 0; i < 10; i++)
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: border),
+              child: FutureBuilder<List<Product>>(
+                  future: productList(widget.categoryId),
+                  builder: (context, product) {
+                    if (product.hasData) {
+                      if (product.data?.isEmpty == false) {
+                        return GridView(
+                          physics: const BouncingScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.80,
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset('assets/products/product.png'),
-                              Text(
-                                'УЗИ аппарат Philips',
-                                overflow: TextOverflow.ellipsis,
-                                style: title,
-                              ),
-                              ElevatedButton(
-                                  onPressed: (() {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Description()));
-                                  }),
-                                  style: ButtonStyle(
-                                    shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10))),
-                                    elevation: MaterialStateProperty.all(1),
-                                    backgroundColor:
-                                        MaterialStateProperty.all(secondary),
-                                    foregroundColor:
-                                        MaterialStateProperty.all(primary),
-                                  ),
-                                  child: Text('Подробнее'))
-                            ],
-                          ),
-                        )
-                    ],
-                  ),
-                  Container(color: Colors.yellow),
-                  Container(color: Colors.red),
-                  Container(color: Colors.green),
-                  Container(color: Colors.yellow),
-                  Container(color: Colors.red),
-                  Container(color: Colors.green),
-                  Container(color: Colors.yellow),
-                  Container(color: Colors.red),
-                  Container(color: Colors.red),
-                ],
-              ),
+                          children: [
+                            for (var i = 0; i < product.data!.length; i++)
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: border),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      height: h * 0.15,
+                                      child: Image.network(
+                                        picUrl(product.data![i].image),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: w * 0.04),
+                                      child: Text(
+                                        product.data![i].name,
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: title,
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: (() {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Description(
+                                                        id: product.data![i].id,
+                                                      )));
+                                        }),
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10))),
+                                          elevation:
+                                              MaterialStateProperty.all(1),
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  secondary),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  primary),
+                                        ),
+                                        child: const Text('Подробнее'))
+                                  ],
+                                ),
+                              )
+                          ],
+                        );
+                      } else {
+                        return const Center(
+                          child: Text("Нет оборудования"),
+                        );
+                      }
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(color: primary),
+                      );
+                    }
+                  }),
             ),
+            Container(color: Colors.yellow),
+            Container(color: Colors.red),
+            Container(color: Colors.green),
+            Container(color: Colors.yellow),
+            Container(color: Colors.red),
+            Container(color: Colors.green),
+            Container(color: Colors.yellow),
+            Container(color: Colors.red),
+            Container(color: Colors.red),
           ],
         ),
       ),

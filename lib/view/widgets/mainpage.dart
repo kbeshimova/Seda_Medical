@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seda/view/screens/directions.dart';
-import 'package:seda/view/global/global.dart';
+import 'package:seda/global/global.dart';
 import 'package:seda/view/screens/home.dart';
 
 class MainPage extends StatefulWidget {
