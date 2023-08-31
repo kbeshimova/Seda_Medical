@@ -138,7 +138,7 @@ class _DescriptionState extends State<Description> {
                                       padding: EdgeInsets.only(
                                           top: h * 0.02, bottom: 20),
                                       child: Text(
-                                        'Подробное описание',
+                                        'Giňişleýin düşündiriş',
                                         textAlign: TextAlign.left,
                                         overflow: TextOverflow.ellipsis,
                                         style: heading,
@@ -205,7 +205,7 @@ class _DescriptionState extends State<Description> {
                                       padding: EdgeInsets.only(
                                           top: h * 0.02, bottom: 5),
                                       child: Text(
-                                        'Часто задаваемые вопросы',
+                                        'Sorag-jogap',
                                         overflow: TextOverflow.ellipsis,
                                         style: heading,
                                       ),
@@ -259,7 +259,7 @@ class _DescriptionState extends State<Description> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Остались вопросы",
+                                              "Sorag galdymy?",
                                               style:
                                                   bodyTx.copyWith(color: white),
                                             ),

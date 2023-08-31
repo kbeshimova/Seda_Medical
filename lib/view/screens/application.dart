@@ -82,7 +82,7 @@ class _ApplicationState extends State<Application> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Text(
-                    'Остались вопросы?',
+                    'Sorag galdymy?',
                     style: headline,
                     textAlign: TextAlign.left,
                   ),
@@ -105,7 +105,48 @@ class _ApplicationState extends State<Application> {
                           color: primary,
                           size: 18,
                         ),
-                        hintText: 'Название компании',
+                        hintText: 'Kompaniýanyň ady',
+                        hintStyle: bodyTx,
+                        fillColor: white,
+                        focusColor: white,
+                        filled: true,
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30)),
+                            borderSide: BorderSide(color: white)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1, color: primary),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(30),
+                              bottomLeft: Radius.circular(30)),
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30)),
+                            borderSide: BorderSide.none)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: TextField(
+                    controller: nameCtrl,
+                    decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 18, horizontal: 26),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1, color: primary),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(30),
+                              bottomLeft: Radius.circular(30)),
+                        ),
+                        suffixIcon: Icon(
+                          Icons.add_business,
+                          color: primary,
+                          size: 18,
+                        ),
+                        hintText: 'Adyňyz',
                         hintStyle: bodyTx,
                         fillColor: white,
                         focusColor: white,
@@ -200,7 +241,7 @@ class _ApplicationState extends State<Application> {
                         color: primary,
                         size: 18,
                       ),
-                      hintText: 'Текст сообщения',
+                      hintText: 'Habaryňyz',
                       hintStyle: bodyTx,
                       fillColor: white,
                       focusColor: white,
@@ -254,7 +295,7 @@ class _ApplicationState extends State<Application> {
                         borderRadius: BorderRadius.circular(15)),
                     child: Center(
                       child: Text(
-                        isLoading ? 'Подождите немного...' : 'Отправить',
+                        isLoading ? 'Biraz garaşyň ...' : 'Ibermek',
                         style: bodyTx.copyWith(color: white),
                       ),
                     ),

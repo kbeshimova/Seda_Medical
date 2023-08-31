@@ -162,7 +162,7 @@ class _CatalogState extends State<Catalog> {
                                               MaterialStateProperty.all(
                                                   primary),
                                         ),
-                                        child: const Text('Подробнее'))
+                                        child: const Text('Giňişleýin'))
                                   ],
                                 ),
                               )
@@ -170,7 +170,7 @@ class _CatalogState extends State<Catalog> {
                         );
                       } else {
                         return const Center(
-                          child: Text("Нет оборудования"),
+                          child: Text("Enjam ýok"),
                         );
                       }
                     } else {

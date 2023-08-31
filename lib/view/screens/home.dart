@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Последние новости',
+                        'Soňky habarlar',
                         style: bodyBl,
                       ),
                       // Icon(
@@ -174,7 +174,7 @@ class _HomeState extends State<Home> {
                             );
                           } else {
                             return const Center(
-                              child: Text("Нет новостей"),
+                              child: Text("Habarlar ýok"),
                             );
                           }
                         } else {
@@ -189,7 +189,7 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25),
                   child: Text(
-                    'Все новости',
+                    'Hemme habarlar',
                     style: bodyBl,
                   ),
                 ),
@@ -280,8 +280,11 @@ class _HomeState extends State<Home> {
                             ],
                           );
                         } else {
-                          return const Center(
-                            child: Text("Нет новостей"),
+                          return Center(
+                            child: Text(
+                              "Habarlar ýok",
+                              style: bodyBl,
+                            ),
                           );
                         }
                       } else {

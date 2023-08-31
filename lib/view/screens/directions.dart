@@ -71,7 +71,7 @@ class _DirectionsState extends State<Directions> {
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
               child: Text(
-                'Каталог',
+                'Ugurlar',
                 style: bodyBl,
               ),
             ),

@@ -69,8 +69,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   List<TabData> tabData = [
-    TabData(img: 'assets/home.png', label: 'Home'),
-    TabData(img: 'assets/catalog.png', label: 'Catalog'),
+    TabData(img: 'assets/home.png', label: 'Baş shaypa'),
+    TabData(img: 'assets/catalog.png', label: 'Katalog'),
     // TabData(img: 'assets/apply.png', label: 'Request'),
   ];
 }
