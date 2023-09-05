@@ -4,6 +4,8 @@ import 'package:seda/view/screens/catalog.dart';
 import 'package:seda/global/global.dart';
 import 'package:seda/view/widgets/clipper.dart';
 
+import '../../global/scanner.dart';
+
 class Directions extends StatefulWidget {
   const Directions({super.key});
 
@@ -56,7 +58,9 @@ class _DirectionsState extends State<Directions> {
                               size: 30,
                             ),
                           ),
-                          onTap: () {}),
+                          onTap: () {
+                            scanBarcodeNormal(context);
+                          }),
                     ],
                   ),
                 ),

@@ -41,7 +41,7 @@ class _ArticleState extends State<Article> {
                           onTap: () {
                             Navigator.of(context).pop();
                           },
-                          child: Image.asset('assets/icons/back.png')),
+                          child: Image.asset('assets/back.png')),
                     ),
                     DraggableSearchableListView(
                         w: w,

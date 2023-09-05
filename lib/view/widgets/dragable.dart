@@ -85,7 +85,7 @@ class _DraggableSearchableListViewState
                               children: [
                                 const CircleAvatar(
                                   backgroundImage:
-                                      AssetImage('assets/banners/docban.jpg'),
+                                      AssetImage('assets/avatar.png'),
                                 ),
                                 Container(
                                   padding:

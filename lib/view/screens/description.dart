@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:seda/classes/product.dart';
 import 'package:seda/global/global.dart';
 import 'package:seda/request/getdata.dart';
+import 'package:seda/view/screens/application.dart';
 import 'package:seda/view/widgets/clipper.dart';
 import 'package:native_video_player/native_video_player.dart';
 
@@ -133,7 +137,7 @@ class _DescriptionState extends State<Description> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Divider(),
+                                    const Divider(),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: h * 0.02, bottom: 20),
@@ -149,105 +153,311 @@ class _DescriptionState extends State<Description> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: h * 0.02, bottom: h * 0.01),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(14),
-                                        child: AspectRatio(
-                                          aspectRatio: 16 / 9,
-                                          child: Stack(
-                                            children: [
-                                              NativeVideoPlayerView(
-                                                onViewReady:
-                                                    (controller) async {
-                                                  _controller = controller;
-                                                  await _controller
-                                                      ?.setVolume(1);
-                                                  await _loadVideoSource(picUrl(
-                                                      product.data![0].video));
-                                                },
-                                              ),
-                                              Material(
-                                                type: MaterialType.transparency,
-                                                child: InkWell(
-                                                  onTap: _togglePlayback,
-                                                  child: Center(
-                                                    child: FutureBuilder(
-                                                      future: _isPlaying,
-                                                      initialData: false,
-                                                      builder: (
-                                                        BuildContext context,
-                                                        AsyncSnapshot<bool>
-                                                            snapshot,
-                                                      ) {
-                                                        final isPlaying =
-                                                            snapshot.data ??
-                                                                false;
-                                                        return Icon(
-                                                          isPlaying
-                                                              ? Icons.pause
-                                                              : Icons
-                                                                  .play_arrow,
-                                                          size: 64,
-                                                          color: Colors.white
-                                                              .withOpacity(
-                                                                  iconOpacity),
-                                                        );
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: secondary, width: 3),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(14),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                14))),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(14),
+                                                      topRight:
+                                                          Radius.circular(14)),
+                                              child: AspectRatio(
+                                                aspectRatio: 16 / 9,
+                                                child: Stack(
+                                                  children: [
+                                                    NativeVideoPlayerView(
+                                                      onViewReady:
+                                                          (controller) async {
+                                                        _controller =
+                                                            controller;
+                                                        await _controller
+                                                            ?.setVolume(1);
+                                                        await _loadVideoSource(
+                                                            picUrl(product
+                                                                .data![0]
+                                                                .video));
                                                       },
                                                     ),
+                                                    Material(
+                                                      type: MaterialType
+                                                          .transparency,
+                                                      child: InkWell(
+                                                        onTap: _togglePlayback,
+                                                        child: Center(
+                                                          child: FutureBuilder(
+                                                            future: _isPlaying,
+                                                            initialData: false,
+                                                            builder: (
+                                                              BuildContext
+                                                                  context,
+                                                              AsyncSnapshot<
+                                                                      bool>
+                                                                  snapshot,
+                                                            ) {
+                                                              final isPlaying =
+                                                                  snapshot.data ??
+                                                                      false;
+                                                              return Icon(
+                                                                isPlaying
+                                                                    ? Icons
+                                                                        .pause
+                                                                    : Icons
+                                                                        .play_arrow,
+                                                                size: 64,
+                                                                color: Colors
+                                                                    .white
+                                                                    .withOpacity(
+                                                                        iconOpacity),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              FileDownloader.downloadFile(
+                                                  url: picUrl(
+                                                      product.data![0].video),
+                                                  name:
+                                                      "Seda Medical - ${product.data![0].name}",
+                                                  onDownloadCompleted: (path) {
+                                                    final File file =
+                                                        File(path);
+                                                    //This will be the path of the downloaded file
+                                                  });
+                                            },
+                                            child: Container(
+                                              width: w * 0.9,
+                                              height: h * 0.05,
+                                              decoration: BoxDecoration(
+                                                color: secondary,
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                        bottomLeft:
+                                                            Radius.circular(14),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                14)),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: w * 0.03),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: w * 0.5,
+                                                      child: const Text(
+                                                        "ÝÜKLÄP ALMAK",
+                                                        softWrap: true,
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xff3E5AE1),
+                                                            fontSize: 14),
+                                                      ),
+                                                    ),
+                                                    Icon(
+                                                      Icons
+                                                          .file_download_outlined,
+                                                      color: purple,
+                                                      size: 24,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    product.data?[0].document != ""
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              FileDownloader.downloadFile(
+                                                  url: picUrl(product
+                                                      .data![0].document),
+                                                  name:
+                                                      "Seda Medical - ${product.data![0].name}",
+                                                  onDownloadCompleted: (path) {
+                                                    final File file =
+                                                        File(path);
+                                                    //This will be the path of the downloaded file
+                                                  });
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: h * 0.02),
+                                              child: Container(
+                                                width: w * 0.9,
+                                                height: h * 0.08,
+                                                decoration: BoxDecoration(
+                                                    color: secondary,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14)),
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: w * 0.02),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .upload_file_rounded,
+                                                            color: purple,
+                                                            size: 40,
+                                                          ),
+                                                          SizedBox(
+                                                            width: w * 0.5,
+                                                            child: const Text(
+                                                              " Dokumenti\n ÝÜKLÄP ALMAK",
+                                                              softWrap: true,
+                                                              style: TextStyle(
+                                                                  color: Color(
+                                                                      0xff3E5AE1),
+                                                                  fontSize: 14),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .file_download_outlined,
+                                                        color: purple,
+                                                        size: 32,
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: h * 0.02, bottom: 5),
-                                      child: Text(
-                                        'Sorag-jogap',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: heading,
-                                      ),
-                                    ),
-                                    Accordion(
-                                      disableScrolling: true,
-                                      maxOpenSections: 2,
-                                      headerBackgroundColorOpened:
-                                          Colors.black54,
-                                      scaleWhenAnimating: true,
-                                      openAndCloseAnimation: true,
-                                      headerPadding: const EdgeInsets.symmetric(
-                                          vertical: 7, horizontal: 15),
-                                      sectionOpeningHapticFeedback:
-                                          SectionHapticFeedback.heavy,
-                                      sectionClosingHapticFeedback:
-                                          SectionHapticFeedback.light,
-                                      children: [
-                                        for (var i = 0; i < 10; i++)
-                                          AccordionSection(
-                                            isOpen: false,
-                                            rightIcon: const Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color: Color(0xff3E5AE1)),
-                                            // leftIcon:
-                                            //     const Icon(Icons.insights_rounded, color: Color(0xff3E5AE1)),
-                                            headerBackgroundColor: secondary,
-                                            header: const Text('Introduction',
-                                                style: headerStyle),
-                                            content: const Text(loremIpsum,
-                                                style: contentStyle),
-                                            contentHorizontalPadding: 20,
-                                            contentBorderWidth: 1,
-                                            // onOpenSection: () => print('onOpenSection ...'),
-                                            // onCloseSection: () => print('onCloseSection ...'),
-                                          ),
-                                      ],
-                                    ),
+                                            ),
+                                          )
+                                        : Container(),
+                                    FutureBuilder(
+                                        future:
+                                            questionList(product.data![0].id),
+                                        builder: (context, question) {
+                                          if (question.hasData) {
+                                            if (question.data?.isEmpty ==
+                                                false) {
+                                              return Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: h * 0.02,
+                                                        bottom: 5),
+                                                    child: Text(
+                                                      'Sorag-jogap',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: heading,
+                                                    ),
+                                                  ),
+                                                  Accordion(
+                                                    disableScrolling: true,
+                                                    maxOpenSections: 2,
+                                                    headerBackgroundColorOpened:
+                                                        Colors.black54,
+                                                    scaleWhenAnimating: true,
+                                                    openAndCloseAnimation: true,
+                                                    headerPadding:
+                                                        const EdgeInsets
+                                                                .symmetric(
+                                                            vertical: 7,
+                                                            horizontal: 15),
+                                                    sectionOpeningHapticFeedback:
+                                                        SectionHapticFeedback
+                                                            .heavy,
+                                                    sectionClosingHapticFeedback:
+                                                        SectionHapticFeedback
+                                                            .light,
+                                                    children: [
+                                                      for (var q = 0;
+                                                          q <
+                                                              question
+                                                                  .data!.length;
+                                                          q++)
+                                                        AccordionSection(
+                                                          isOpen: false,
+                                                          rightIcon: const Icon(
+                                                              Icons
+                                                                  .keyboard_arrow_down,
+                                                              color: Color(
+                                                                  0xff3E5AE1)),
+                                                          // leftIcon:
+                                                          //     const Icon(Icons.insights_rounded, color: Color(0xff3E5AE1)),
+                                                          headerBackgroundColor:
+                                                              secondary,
+                                                          header: Text(
+                                                              question.data![q]
+                                                                  .question,
+                                                              style:
+                                                                  headerStyle),
+                                                          content: Text(
+                                                            question.data![q]
+                                                                .answer,
+                                                            style: contentStyle,
+                                                          ),
+                                                          contentHorizontalPadding:
+                                                              20,
+                                                          contentBorderWidth: 1,
+                                                          // onOpenSection: () => print('onOpenSection ...'),
+                                                          // onCloseSection: () => print('onCloseSection ...'),
+                                                        ),
+                                                    ],
+                                                  )
+                                                ],
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          } else {
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                color: primary,
+                                              ),
+                                            );
+                                          }
+                                        }),
                                     GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Application(
+                                                      deviceName:
+                                                          product.data![0].name,
+                                                    )));
+                                      },
                                       child: Container(
-                                        margin: EdgeInsets.only(
-                                            top: 44, bottom: 120),
+                                        margin:
+                                            EdgeInsets.only(bottom: h * 0.05),
                                         height: 60,
                                         width: w,
                                         decoration: BoxDecoration(

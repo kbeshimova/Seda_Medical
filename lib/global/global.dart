@@ -8,6 +8,7 @@ var grey = const Color(0xffC4C4C4);
 var border = const Color(0xffEEEEEE);
 var name = const Color(0xff35383F);
 var text = const Color(0xff19202D);
+var purple = const Color(0xff3E5AE1);
 
 var headline = TextStyle(fontSize: 26, color: text);
 var heading = TextStyle(fontSize: 20, color: text);
@@ -28,5 +29,6 @@ const contentStyleHeader = TextStyle(
     color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
 const contentStyle = TextStyle(
     color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
-const loremIpsum =
-    '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
+
+// Barcode
+String barcode = '-1';

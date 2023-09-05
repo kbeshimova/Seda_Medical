@@ -41,6 +41,10 @@ dependencies:
   native_video_player: ^1.2.0+3
   accordion: ^2.5.1
   mask_text_input_formatter: ^2.5.0
+  flutter_barcode_scanner: ^2.0.0
+  firebase_core: ^2.4.1
+  firebase_messaging: ^14.2.1
+  flutter_file_downloader: ^1.1.2
 
 
 dev_dependencies:
@@ -67,42 +71,43 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/home.png
-    - assets/catalog.png
-    - assets/apply.png
-    - assets/icons/back.png
-    - assets/icons/ultradiag.png
-    - assets/sedalogo.png
-    - assets/icons/tune.png
-    - assets/banners/docban.jpg
-    - assets/products/product.png
-    - assets/directions/endoskopiya.png
-    - assets/directions/endovideohirurgiya.png
-    - assets/directions/fotolaborotoriya.png
-    - assets/directions/funcd.png
-    - assets/directions/ginekologiya.png
-    - assets/directions/hirurgiya.png
-    - assets/directions/instumentii.png
-    - assets/directions/kosmetologiya.png
-    - assets/directions/laborotoriya.png
-    - assets/directions/lor.png
-    - assets/directions/luchevaya.png
-    - assets/directions/mebell.png
-    - assets/directions/medicina.png
-    - assets/directions/neonatologiya.png
-    - assets/directions/neonatologiya.png
-    - assets/directions/nnerologiya.png
-    - assets/directions/oftalmologiya.png
-    - assets/directions/proktologiya.png
-    - assets/directions/rashodmed.png
-    - assets/directions/reanimaciya.png
-    - assets/directions/rentgen.png
-    - assets/directions/sterilizaciya.png
-    - assets/directions/ttravmatologiya.png
-    - assets/directions/ultrazvuk.png
-    - assets/directions/uurologiya.png
-    - assets/directions/uutilizaciya.png
-    - assets/directions/yadernaya.png
+    - assets/
+    # - assets/home.png
+    # - assets/catalog.png
+    # - assets/apply.png
+    # - assets/icons/back.png
+    # - assets/icons/ultradiag.png
+    # - assets/sedalogo.png
+    # - assets/icons/tune.png
+    # - assets/banners/docban.jpg
+    # - assets/products/product.png
+    # - assets/directions/endoskopiya.png
+    # - assets/directions/endovideohirurgiya.png
+    # - assets/directions/fotolaborotoriya.png
+    # - assets/directions/funcd.png
+    # - assets/directions/ginekologiya.png
+    # - assets/directions/hirurgiya.png
+    # - assets/directions/instumentii.png
+    # - assets/directions/kosmetologiya.png
+    # - assets/directions/laborotoriya.png
+    # - assets/directions/lor.png
+    # - assets/directions/luchevaya.png
+    # - assets/directions/mebell.png
+    # - assets/directions/medicina.png
+    # - assets/directions/neonatologiya.png
+    # - assets/directions/neonatologiya.png
+    # - assets/directions/nnerologiya.png
+    # - assets/directions/oftalmologiya.png
+    # - assets/directions/proktologiya.png
+    # - assets/directions/rashodmed.png
+    # - assets/directions/reanimaciya.png
+    # - assets/directions/rentgen.png
+    # - assets/directions/sterilizaciya.png
+    # - assets/directions/ttravmatologiya.png
+    # - assets/directions/ultrazvuk.png
+    # - assets/directions/uurologiya.png
+    # - assets/directions/uutilizaciya.png
+    # - assets/directions/yadernaya.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

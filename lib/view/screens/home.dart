@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:seda/classes/news.dart';
@@ -5,6 +6,8 @@ import 'package:seda/request/getdata.dart';
 import 'package:seda/view/screens/article.dart';
 import 'package:seda/global/global.dart';
 import 'package:seda/view/widgets/clipper.dart';
+
+import '../../global/scanner.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,6 +18,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var clipper = BlueClipper();
+
+  Future phoneToken() async {
+    String myTokens = await FirebaseMessaging.instance.getToken() ?? "";
+    saveToken(myTokens);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    phoneToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +75,9 @@ class _HomeState extends State<Home> {
                                 size: 30,
                               ),
                             ),
-                            onTap: () {}),
+                            onTap: () {
+                              scanBarcodeNormal(context);
+                            }),
                       ],
                     ),
                   ),

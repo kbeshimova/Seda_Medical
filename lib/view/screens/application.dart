@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:seda/global/global.dart';
+import 'package:seda/request/getdata.dart';
 import 'package:seda/view/widgets/clipper.dart';
 
+import '../../global/scanner.dart';
+
 class Application extends StatefulWidget {
-  const Application({super.key});
+  Application({super.key, required this.deviceName});
+
+  String deviceName;
 
   @override
   State<Application> createState() => _ApplicationState();
 }
 
 class _ApplicationState extends State<Application> {
+  TextEditingController companyCtrl = TextEditingController();
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController phoneCtrl = TextEditingController();
   TextEditingController textCtrl = TextEditingController();
@@ -24,53 +29,71 @@ class _ApplicationState extends State<Application> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     bool isLoading = false;
-    bool isSended = false;
     return SafeArea(
       child: Scaffold(
         backgroundColor: white,
         appBar: PreferredSize(
             preferredSize: Size(w, h * 0.13),
             child: SafeArea(
-              child: CustomPaint(
-                painter: ClipShadowShadowPainter(
-                  clipper: clipper,
-                  shadow: const BoxShadow(
-                      color: Colors.transparent,
-                      offset: Offset(0, -10),
-                      blurRadius: 30,
-                      spreadRadius: 10),
-                ),
-                child: ClipPath(
-                  clipper: clipper,
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 10),
-                    color: secondary,
-                    height: h * 0.13,
-                    width: w,
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(),
-                        Image.asset(
-                          'assets/sedalogo.png',
-                          height: 38,
-                        ),
-                        GestureDetector(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Icon(
-                                Icons.qr_code_scanner,
-                                color: black,
-                                size: 30,
-                              ),
+              child: Stack(
+                children: [
+                  CustomPaint(
+                    painter: ClipShadowShadowPainter(
+                      clipper: clipper,
+                      shadow: const BoxShadow(
+                          color: Colors.transparent,
+                          offset: Offset(0, -10),
+                          blurRadius: 30,
+                          spreadRadius: 10),
+                    ),
+                    child: ClipPath(
+                      clipper: clipper,
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 10),
+                        color: secondary,
+                        height: h * 0.13,
+                        width: w,
+                        alignment: Alignment.topCenter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(),
+                            Image.asset(
+                              'assets/sedalogo.png',
+                              height: 38,
                             ),
-                            onTap: () {}),
-                      ],
+                            GestureDetector(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: Icon(
+                                    Icons.qr_code_scanner,
+                                    color: black,
+                                    size: 30,
+                                  ),
+                                ),
+                                onTap: () {
+                                  scanBarcodeNormal(context);
+                                }),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: GestureDetector(
+                      onTap: (() {
+                        Navigator.of(context).pop();
+                      }),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: black,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             )),
         body: SingleChildScrollView(
@@ -90,7 +113,7 @@ class _ApplicationState extends State<Application> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: TextField(
-                    controller: nameCtrl,
+                    controller: companyCtrl,
                     decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 18, horizontal: 26),
@@ -105,7 +128,7 @@ class _ApplicationState extends State<Application> {
                           color: primary,
                           size: 18,
                         ),
-                        hintText: 'Kompaniýanyň ady',
+                        hintText: 'Edaranyň ady',
                         hintStyle: bodyTx,
                         fillColor: white,
                         focusColor: white,
@@ -142,7 +165,7 @@ class _ApplicationState extends State<Application> {
                               bottomLeft: Radius.circular(30)),
                         ),
                         suffixIcon: Icon(
-                          Icons.add_business,
+                          Icons.account_box,
                           color: primary,
                           size: 18,
                         ),
@@ -267,27 +290,13 @@ class _ApplicationState extends State<Application> {
                   ),
                 ),
                 GestureDetector(
-                  // onTap: () async {
-                  //   setState(() {
-                  //     isLoading = true;
-                  //   });
-                  //   try {
-                  //     await askQuestion(
-                  //         name: nameCtrl.text,
-                  //         state: stateCtrl.text,
-                  //         text: textCtrl.text);
-                  //     setState(() {
-                  //       isSended = true;
-                  //     });
-                  //   } on DioError catch (e) {
-                  //     showToast("Ошибка отправки");
-                  //   }
-                  //   setState(() {
-                  //     isLoading = false;
-                  //   });
-                  // },
+                  onTap: () async {
+                    await sendQuestion(widget.deviceName, companyCtrl.text,
+                        nameCtrl.text, phoneCtrl.text, textCtrl.text);
+                    Navigator.pop(context);
+                  },
                   child: Container(
-                    margin: EdgeInsets.only(top: 44, bottom: 120),
+                    margin: EdgeInsets.symmetric(vertical: h * 0.05),
                     height: 60,
                     width: w,
                     decoration: BoxDecoration(
@@ -295,7 +304,7 @@ class _ApplicationState extends State<Application> {
                         borderRadius: BorderRadius.circular(15)),
                     child: Center(
                       child: Text(
-                        isLoading ? 'Biraz garaşyň ...' : 'Ibermek',
+                        isLoading == true ? "Biraz garaşyň" : 'Ibermek',
                         style: bodyTx.copyWith(color: white),
                       ),
                     ),

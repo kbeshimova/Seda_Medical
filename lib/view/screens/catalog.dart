@@ -6,6 +6,7 @@ import 'package:seda/view/screens/description.dart';
 import 'package:seda/view/widgets/clipper.dart';
 
 import '../../classes/product.dart';
+import '../../global/scanner.dart';
 
 class Catalog extends StatefulWidget {
   const Catalog({super.key, required this.categoryId});
@@ -70,8 +71,7 @@ class _CatalogState extends State<Catalog> {
                                   ),
                                 ),
                                 onTap: () {
-                                  // Navigator.of(context).push(
-                                  //     MaterialPageRoute(builder: (context) => FilterSwipe()));
+                                  scanBarcodeNormal(context);
                                 }),
                           ],
                         ),
