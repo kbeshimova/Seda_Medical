@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:seda/view/screens/application.dart';
 import 'package:seda/view/screens/directions.dart';
 import 'package:seda/global/global.dart';
 import 'package:seda/view/screens/home.dart';
@@ -13,8 +12,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   List pages = [
-    Home(),
-    Directions(),
+    const Home(),
+    const Directions(),
   ];
   int currentIndex = 0;
   void onTap(int index) {

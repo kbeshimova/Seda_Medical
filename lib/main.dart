@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Seda Medical',
       theme: ThemeData(
-        fontFamily: 'Poppins',
+        fontFamily: 'Montserrat',
         primarySwatch: Colors.blue,
       ),
       home: const MainPage(),

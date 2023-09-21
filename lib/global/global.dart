@@ -11,7 +11,7 @@ var text = const Color(0xff19202D);
 var purple = const Color(0xff3E5AE1);
 
 var headline = TextStyle(fontSize: 26, color: text);
-var heading = TextStyle(fontSize: 20, color: text);
+var heading = TextStyle(fontSize: 20, color: text, fontWeight: FontWeight.bold);
 var bodyBl = TextStyle(fontSize: 16, color: black, fontWeight: FontWeight.w700);
 var bodyTx = const TextStyle(
   fontSize: 16,

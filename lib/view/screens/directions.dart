@@ -109,14 +109,55 @@ class _DirectionsState extends State<Directions> {
                                       picUrl(category.data![i].icon),
                                       height: 49,
                                     ),
-                                    SizedBox(
-                                      width: w * 0.5,
-                                      child: Text(
-                                        category.data![i].name,
-                                        overflow: TextOverflow.clip,
-                                        maxLines: 2,
-                                        style: heading,
-                                      ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            SizedBox(
+                                              width: w * 0.6,
+                                              child: Text(
+                                                // category.data![i].name,
+                                                "Hello",
+                                                overflow: TextOverflow.clip,
+                                                maxLines: 3,
+                                                style: heading,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: w * 0.6,
+                                              child: Text(
+                                                // category.data![i].name,
+                                                "Hello",
+                                                overflow: TextOverflow.clip,
+                                                maxLines: 3,
+                                                style: heading,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: secondary
+                                                      .withOpacity(0.5)),
+                                              child: Text('ru'),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: secondary
+                                                      .withOpacity(0.5)),
+                                              child: Text('tm'),
+                                            )
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                     Icon(
                                       Icons.arrow_forward_ios,

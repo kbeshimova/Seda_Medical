@@ -107,63 +107,68 @@ class _CatalogState extends State<Catalog> {
                           physics: const BouncingScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
+                            crossAxisCount: 1,
                             childAspectRatio: 0.80,
                           ),
                           children: [
                             for (var i = 0; i < product.data!.length; i++)
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: border),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    SizedBox(
-                                      height: h * 0.15,
-                                      child: Image.network(
-                                        picUrl(product.data![i].image),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: w * 0.04),
-                                      child: Text(
-                                        product.data![i].name,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        style: title,
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                        onPressed: (() {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Description(
-                                                        id: product.data![i].id,
-                                                      )));
-                                        }),
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10))),
-                                          elevation:
-                                              MaterialStateProperty.all(1),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  secondary),
-                                          foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  primary),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: border),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        height: h * 0.15,
+                                        child: Image.network(
+                                          picUrl(product.data![i].image),
+                                          fit: BoxFit.cover,
                                         ),
-                                        child: const Text('Giňişleýin'))
-                                  ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: w * 0.04),
+                                        child: Text(
+                                          product.data![i].name,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: title,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                          onPressed: (() {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Description(
+                                                          id: product
+                                                              .data![i].id,
+                                                        )));
+                                          }),
+                                          style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10))),
+                                            elevation:
+                                                MaterialStateProperty.all(1),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    secondary),
+                                            foregroundColor:
+                                                MaterialStateProperty.all(
+                                                    primary),
+                                          ),
+                                          child: const Text('Giňişleýin'))
+                                    ],
+                                  ),
                                 ),
                               )
                           ],
